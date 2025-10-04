@@ -11,10 +11,7 @@ def load_codegen_model(model_name="Salesforce/codegen-350M-multi"):
     return tokenizer, model
 
 def generate_solution(query, top_k=1, max_examples=1):
-    """
-    Retrieve similar examples and generate code using CodeGen.
-    Returns retrieved metas and generated solution.
-    """
+
     docs, metas = retrieve_similar(collection, query, top_k=top_k, rerank=True)
 
     tokenizer, model = load_codegen_model()
@@ -35,9 +32,7 @@ def generate_solution(query, top_k=1, max_examples=1):
     return metas[:max_examples], gen_part
 
 def evaluate_example(query, canonical_solution, top_k=1, max_examples=1):
-    """
-    Evaluate a single query with its canonical solution.
-    """
+   
     metas, generated = generate_solution(query, top_k=top_k, max_examples=max_examples)
 
     exact_match = int(generated.strip() == canonical_solution.strip())
@@ -58,9 +53,7 @@ def evaluate_example(query, canonical_solution, top_k=1, max_examples=1):
     return exact_match, bleu
 
 def evaluate_dataset(sample_size=5):
-    """
-    Evaluate multiple examples from HumanEval test set.
-    """
+  
     data = load()
     data_sample = data.sample(sample_size, random_state=42)
 
