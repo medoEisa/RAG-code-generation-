@@ -40,15 +40,12 @@ def evaluate_example(query, canonical_solution, top_k=1, max_examples=1):
     """
     metas, generated = generate_solution(query, top_k=top_k, max_examples=max_examples)
 
-    # Exact match evaluation
     exact_match = int(generated.strip() == canonical_solution.strip())
 
-    # BLEU score evaluation
     reference = [canonical_solution.strip().split()]
     candidate = generated.strip().split()
     bleu = sentence_bleu(reference, candidate)
 
-    # Print evaluation
     print("\n====================")
     print("Query:", query)
     print("\nRetrieved Examples:")

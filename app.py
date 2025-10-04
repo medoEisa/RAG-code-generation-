@@ -27,14 +27,14 @@ if st.button("Generate Code"):
     if not prompt.strip():
         st.warning("Please enter a valid code prompt.")
     else:
-        st.info("🔍 Retrieving similar examples from ChromaDB...")
+        st.info("Retrieving similar examples from ChromaDB...")
         try:
             docs, metas = retrieve_similar(collection, prompt, top_k=top_k, rerank=rerank)
         except Exception as e:
             st.error(f"Error retrieving examples: {e}")
             st.stop()
 
-        st.subheader("📚 Retrieved Examples")
+        st.subheader("Retrieved Examples")
         if not docs:
             st.warning("No similar examples found in the database.")
         else:
@@ -44,7 +44,7 @@ if st.button("Generate Code"):
                     if "solution" in meta:
                         st.caption(f"Canonical Solution (truncated): {meta['solution'][:200]} ...")
 
-        st.info("🧠 Generating code ...")
+        st.info("Generating code ...")
         try:
             retrieved_metas, generated_code = generate_code(prompt, top_k=top_k, max_examples=max_examples)
             st.subheader("📝 Generated Code")

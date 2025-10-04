@@ -12,18 +12,16 @@ def init_chroma(db_path="./chroma_db", model_name="all-MiniLM-L6-v2"):
     
     try:
         collection = client.get_collection("humaneval")
-        print("✅ Loaded existing ChromaDB collection.")
+        print("Loaded existing ChromaDB collection.")
     except Exception:
         collection = client.create_collection("humaneval", embedding_function=ef)
-        print("🆕 Created new ChromaDB collection.")
+        print("Created new ChromaDB collection.")
     return collection
 
 collection = init_chroma()
 
 def store_embeddings(collection):
-    """
-    Store task prompts and solutions into ChromaDB if not already stored.
-    """
+   
     data = load()
     existing = collection.count()
 
@@ -34,15 +32,12 @@ def store_embeddings(collection):
                 documents=[text],
                 metadatas=[{"task_id": task_id, "solution": solution}]
             )
-        print(f"✅ Stored {len(data)} documents in ChromaDB.")
+        print(f"Stored {len(data)} documents in ChromaDB.")
     else:
         print(f"ℹ️ ChromaDB already contains {existing} entries — skipping embedding.")
 
 def retrieve_similar(collection, query, top_k=5, rerank=False):
-    """
-    Retrieve top similar code examples based on query.
-    Optionally rerank results using a cross-encoder.
-    """
+   
     results = collection.query(query_texts=[query], n_results=top_k * 2 if rerank else top_k)
     docs = results["documents"][0]
     metas = results["metadatas"][0]
