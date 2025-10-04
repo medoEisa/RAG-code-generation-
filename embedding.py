@@ -4,9 +4,7 @@ from sentence_transformers import CrossEncoder
 from load_data import load
 
 def init_chroma(db_path="./chroma_db", model_name="all-MiniLM-L6-v2"):
-    """
-    Initialize or load a ChromaDB collection for storing embeddings.
-    """
+   
     client = chromadb.PersistentClient(path=db_path)
     ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name=model_name)
     
@@ -34,7 +32,7 @@ def store_embeddings(collection):
             )
         print(f"Stored {len(data)} documents in ChromaDB.")
     else:
-        print(f"ℹ️ ChromaDB already contains {existing} entries — skipping embedding.")
+        print(f"ChromaDB already contains {existing} entries — skipping embedding.")
 
 def retrieve_similar(collection, query, top_k=5, rerank=False):
    
