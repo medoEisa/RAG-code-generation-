@@ -46,7 +46,7 @@ def generate_code(query, top_k=1, max_examples=1):
     generated_code = tokenizer.decode(outputs[0], skip_special_tokens=True)
     gen_part = generated_code[len(prompt):].strip()
 
-    print("\n🧠 Generated Solution:\n")
+    print("\n Generated Solution:\n")
     print(gen_part)
 
     return metas[:max_examples], gen_part
